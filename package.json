@@ -1,0 +1,17 @@
+{
+  "name": "@bethel/api",
+  "main": "index.js",
+  "private": true,
+  "repository": "getbethel/api",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "dependencies": {
+    "nautilus": "github:ignigena/nautilus#v0.5.0"
+  },
+  "engines": {
+    "node": "6.x",
+    "npm": "3.x"
+  }
+}

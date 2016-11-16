@@ -1,0 +1,9 @@
+config/env/local.js
+coverage
+dist/css
+dist/js
+docs
+node_modules
+*.log
+.tmp
+.DS_Store
