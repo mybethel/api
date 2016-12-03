@@ -8,7 +8,7 @@
     "start": "node ./index.js"
   },
   "dependencies": {
-    "nautilus": "github:ignigena/nautilus#v0.5.0"
+    "nautilus": "github:ignigena/nautilus#v0.5.1"
   },
   "engines": {
     "node": "6.x",
