@@ -3,6 +3,24 @@ const Mongoose = require('mongoose');
 module.exports = {
   schema: {
     name: String,
-    ministry: { type: Mongoose.Schema.Types.ObjectId, ref: 'Ministry' }
+    image: String,
+    ministry: { type: Mongoose.Schema.Types.ObjectId, ref: 'Ministry' },
+    updatedAt: Date
+  },
+  options: {
+    toJSON: {
+      transform(doc, ret, options) {
+        ret.image = doc.imageUrl;
+        delete ret.temporaryImage;
+        return ret;
+      }
+    }
+  },
+  setup(schema) {
+    schema.virtual('imageUrl').get(function() {
+      const cdnSettings = '?crop=faces&fit=crop&w=1400&h=1400';
+      const image = this.image || 'DefaultPodcaster.png';
+      return `https://images.bethel.io/images/${image}${cdnSettings}&modified=${this.updatedAt.getTime()}`
+    });
   }
 };
