@@ -4,7 +4,7 @@ if (process.env.NEW_RELIC_LICENSE_KEY) {
   require('newrelic');
 }
 
-const Nautilus = require('nautilus');
+const Nautilus = require('@nautilus/web');
 var server = new Nautilus({
   session: false,
   slash: false
