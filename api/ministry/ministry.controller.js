@@ -1,10 +1,10 @@
 module.exports = (router, app) => ({
 
   '/:id/podcast': function(req, res) {
-    app.api.model.find('podcast', { podcast: req.params.id }, req)
-      .then(results => {
-        res.json(results);
-      });
+    let query = app.blueprint.find('podcast', { podcast: req.params.id }, req);
+
+    query.then(results => app.blueprint.format(results, query, req))
+      .then(formatted => res.json(formatted));
   }
 
 });
