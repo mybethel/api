@@ -1,14 +1,12 @@
 const bcrypt = require('bcrypt');
 const expect = require('expect');
+const jwt = require('jsonwebtoken');
 const request = require('supertest');
-
-const fixture = require('./user.fixture');
 
 describe('api:user', function() {
   let app = require('../../test/app.js');
+  const fixture = require('./user.fixture')(app);
   let createdUser;
-
-  before(() => app.model('user').remove());
 
   it('allows the creation of a user', done => {
     app.model('user').create(fixture.user, (err, user) => {
@@ -50,5 +48,65 @@ describe('api:user', function() {
 
   it('protects the user list against anonymous access', done => {
     request(app).get('/user').expect(401, done);
+  });
+
+  let authToken;
+  let decodedToken;
+
+  describe('login and authentication', () => {
+    it('rejects invalid login attempts', done => {
+      request(app).post('/user/auth')
+        .field('email', 'nope@nothere.com')
+        .field('password', 'nope')
+        .expect(401, done);
+    });
+
+    it('allows valid users to login', done => {
+      request(app).post('/user/auth')
+        .set('Accept', 'application/json')
+        .send({ email: fixture.user.email, password: fixture.user.password })
+        .expect(200, (err, response) => {
+          expect(response.body.token).toExist();
+          authToken = response.body.token;
+          done();
+        });
+    });
+
+    it('provides a valid JWT for authorization', done => {
+      jwt.verify(authToken, app.config.security.jwtSecret, (err, decoded) => {
+        if (err) return done(err);
+        decodedToken = decoded;
+        done();
+      });
+    });
+
+    it('allows an authenticated user to view private routes', done => {
+      request(app).get('/user')
+        .set('Authorization', `JWT ${authToken}`)
+        .expect(200, done);
+    });
+  });
+
+  describe('token re-issuance', () => {
+    before(done => setTimeout(() => done(), 1000));
+
+    it('allows users to refresh their un-expired token', done => {
+      request(app).post('/user/auth')
+        .set('Accept', 'application/json')
+        .set('Authorization', `JWT ${authToken}`)
+        .expect(200, (err, response) => {
+          expect(response.body.token).toExist();
+          authToken = response.body.token;
+          done();
+        });
+    });
+
+    it('extends the expiration date when refreshing a token', done => {
+      jwt.verify(authToken, app.config.security.jwtSecret, (err, decoded) => {
+        if (err) return done(err);
+        expect(decoded.exp - decodedToken.exp > 0).toBeTruthy();
+        done();
+      });
+    });
   });
 });

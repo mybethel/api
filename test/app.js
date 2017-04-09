@@ -6,7 +6,7 @@ let api = new Nautilus({
   session: false,
   slash: false,
   connections: {
-    mongo: { url: process.env.DB_TEST || 'mongodb://127.0.0.1:27017' },
+    mongo: { url: process.env.DB_TEST || 'mongodb://127.0.0.1:27017/bethel-test' },
   },
 });
 
