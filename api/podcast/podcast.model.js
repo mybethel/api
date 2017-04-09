@@ -16,11 +16,11 @@ module.exports = {
       }
     }
   },
-  setup(schema) {
-    schema.virtual('imageUrl').get(function() {
+  virtuals: {
+    imageUrl() {
       const cdnSettings = '?crop=faces&fit=crop&w=1400&h=1400';
       const image = this.image || 'DefaultPodcaster.png';
-      return `https://images.bethel.io/images/${image}${cdnSettings}&modified=${this.updatedAt.getTime()}`
-    });
-  }
+      return `https://images.bethel.io/images/${image}${cdnSettings}&modified=${this.updatedAt.getTime()}`;
+    },
+  },
 };

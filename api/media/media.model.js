@@ -19,9 +19,9 @@ module.exports = {
       }
     }
   },
-  setup(schema) {
-    schema.virtual('downloadUrl').get(function() {
+  virtuals: {
+    downloadUrl() {
       return `https://my.bethel.io/podcastmedia/download/${this._id}.${this.url.split('.').pop()}`;
-    });
-  }
+    },
+  },
 };
