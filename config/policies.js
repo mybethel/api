@@ -1,3 +1,4 @@
 module.exports = {
-  '*': 'publicRead'
+  '*': 'publicRead',
+  '/user': 'authenticated',
 };
