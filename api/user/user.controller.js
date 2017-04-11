@@ -25,11 +25,11 @@ module.exports = (router, app) => ({
         expiresIn: '7d',
       });
 
-      if (hasToken) return res.ok({ token });
+      if (hasToken) return res.ok({ data: user, token });
 
       bcrypt.compare(req.body.password, user.password, (err, valid) => {
         if (err || !valid) return res.unauthorized();
-        res.ok({ token });
+        res.ok({ data: user, token });
       });
     });
   },

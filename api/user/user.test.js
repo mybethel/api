@@ -66,6 +66,7 @@ describe('api:user', function() {
         .set('Accept', 'application/json')
         .send({ email: fixture.user.email, password: fixture.user.password })
         .expect(200, (err, response) => {
+          expect(response.body.data.email).toEqual(fixture.user.email);
           expect(response.body.token).toExist();
           authToken = response.body.token;
           done();
