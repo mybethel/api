@@ -33,4 +33,21 @@ module.exports = (router, app) => ({
       });
     });
   },
+
+  create(req, res) {
+    if (req.body.ministryName) {
+      return app.model('ministry').create({
+        name: req.body.ministryName,
+      }).then(ministry => {
+        req.body.ministry = ministry._id;
+        return app.model('user').create(req.body);
+      }).then(user => res.created(user))
+        .catch(err => res.serverError(err));
+    }
+
+    app.model('user').create(req.body)
+      .then(user => res.created(user))
+      .catch(err => res.serverError(err));
+  },
+
 });

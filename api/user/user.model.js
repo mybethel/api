@@ -13,6 +13,10 @@ module.exports = {
     },
   },
   schema: {
+    confirmed: {
+      type: Boolean,
+      default: false,
+    },
     email: {
       index: { unique: true },
       lowercase: true,
@@ -20,10 +24,11 @@ module.exports = {
       trim: true,
       type: String,
     },
+    isLocked: Boolean,
     lastLogin: Date,
+    ministry: { type: Mongoose.Schema.Types.ObjectId, ref: 'Ministry' },
     ministriesAuthorized: [Mongoose.Schema.Types.ObjectId],
     name: String,
-    isLocket: Boolean,
     password: String,
   },
   options: {

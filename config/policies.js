@@ -1,5 +1,5 @@
 module.exports = {
   '*': 'publicRead',
   '/user/auth': true,
-  '/user': 'authenticated',
+  '/user': 'publicCreate',
 };

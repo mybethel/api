@@ -7,5 +7,11 @@ module.exports = function(app) {
       email: 'jayne@bethel.io',
       password: 'v3ra'
     },
+    newUser: {
+      name: 'Registered User',
+      ministryName: 'Global Community Church',
+      email: 'registration@bethel.io',
+      password: 'abcd1234',
+    },
   };
 };

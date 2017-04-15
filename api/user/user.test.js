@@ -88,6 +88,28 @@ describe('api:user', function() {
     });
   });
 
+  describe('new user registration', () => {
+    it('allows a new user to register via the API', done => {
+      request(app).post('/user')
+        .send(fixture.newUser)
+        .expect(201, done);
+    });
+
+    let registeredUser;
+
+    it('creates a matching ministry for the registering user', done => {
+      app.model('user').findOne({ email: fixture.newUser.email }, (err, user) => {
+        expect(user.ministry).toExist();
+        registeredUser = user;
+        done();
+      });
+    });
+
+    it('requires new users to validate their e-mail', () => {
+      expect(registeredUser.confirmed).toEqual(false);
+    });
+  });
+
   describe('token re-issuance', () => {
     before(done => setTimeout(() => done(), 1000));
 
