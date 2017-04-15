@@ -105,6 +105,10 @@ describe('api:user', function() {
       });
     });
 
+    it('gives new users administrative priveleges', () => {
+      expect(registeredUser.permission).toEqual('admin');
+    });
+
     it('requires new users to validate their e-mail', () => {
       expect(registeredUser.confirmed).toEqual(false);
     });

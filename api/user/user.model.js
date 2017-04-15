@@ -30,10 +30,17 @@ module.exports = {
     ministriesAuthorized: [Mongoose.Schema.Types.ObjectId],
     name: String,
     password: String,
+    permission: {
+      type: String,
+      enum: ['staff', 'admin', 'user', 'restricted'],
+    },
   },
   options: {
     toJSON: {
       transform(doc, ret, options) {
+        if (ret.roles && ret.roles[0] === 'ROLE_SUPER_ADMIN') {
+          ret.permission = 'staff';
+        }
         delete ret.password;
         return ret;
       },

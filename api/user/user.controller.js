@@ -40,6 +40,7 @@ module.exports = (router, app) => ({
         name: req.body.ministryName,
       }).then(ministry => {
         req.body.ministry = ministry._id;
+        req.body.permission = 'admin';
         return app.model('user').create(req.body);
       }).then(user => res.created(user))
         .catch(err => res.serverError(err));
