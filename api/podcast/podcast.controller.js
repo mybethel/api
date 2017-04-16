@@ -33,6 +33,7 @@ module.exports = (router, app) => ({
       // partial representation of the entire week.
       let subscribers = results[0].reverse()[1] || '0';
       res.ok({
+        podcast: req.params.id,
         episodes: results[1],
         graph: results[0],
         subscribers,
