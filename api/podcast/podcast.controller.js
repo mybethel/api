@@ -31,7 +31,7 @@ module.exports = (router, app) => ({
       // Subscriber count is the total number of subscribers as counted last
       // week. Numbers for the current week are too volatile as we only have a
       // partial representation of the entire week.
-      let subscribers = results[0].reverse()[1] || '0';
+      let subscribers = results[0].reverse()[1].value || '0';
       res.ok({
         podcast: req.params.id,
         episodes: results[1],
