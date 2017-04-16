@@ -10,6 +10,11 @@ module.exports = (router, app) => ({
   '/:id/stats': function(req, res) {
     let subscribers = app.performance.query('count', {
       event_collection: 'podcast',
+      filters: [{
+        property_name: 'podcast',
+        operator: 'eq',
+        property_value: req.params.id,
+      }],
       interval: 'weekly',
       timeframe: 'this_12_weeks',
     });
