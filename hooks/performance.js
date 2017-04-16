@@ -4,9 +4,11 @@ module.exports = app => {
   // the most accurate data before logging to Keen.
   app.enable('trust proxy');
 
-  try {
-    return new Keen(app.config.performance);
-  } catch(err) {
-    app.log.warn('Keen was unable to initialize', err);
-  }
+  let client = new Keen(app.config.performance);
+  return {
+    client,
+    query(type, config) {
+      return new Keen.Query(type, config);
+    }
+  };
 };
