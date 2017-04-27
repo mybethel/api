@@ -12,6 +12,7 @@ module.exports = app => {
     query(type, config) {
       let endpoint = `projects/${app.config.performance.projectId}/queries/${type}`;
       config['api_key'] = app.config.performance.readKey;
+      if (config.filters) config.filters = JSON.stringify(config.filters);
       config = qs.stringify(config);
       return `https://api.keen.io/3.0/${endpoint}?${config}`;
     }
