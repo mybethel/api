@@ -56,13 +56,14 @@ module.exports = (router, app) => ({
       // Allow the user to masquerade under a ministry other than their primary.
       // Requires the user to have staff permissions or to have the ministry ID
       // listed as authorized on their account.
-      if (req.body.ministry) {
+      let ministryId = req.body.ministry || (req.authorization && req.authorization.ministry);
+      if (ministryId) {
         let userObject = user.toJSON();
-        if (userObject.permission !== 'staff' && userObject.ministriesAuthorized.indexOf(req.body.ministry) < 0) {
+        if (userObject.permission !== 'staff' && userObject.ministriesAuthorized.indexOf(ministryId) < 0) {
           return res.unauthorized();
         }
 
-        user.ministry = req.body.ministry;
+        user.ministry = ministryId;
       }
 
       const token = app.token.issue(user);
