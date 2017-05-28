@@ -21,7 +21,7 @@ module.exports = {
   },
   virtuals: {
     downloadUrl() {
-      return `https://my.bethel.io/podcastmedia/download/${this._id}.${this.url.split('.').pop()}`;
+      return `https://my.bethel.io/podcastmedia/download/${this._id}.${this.url.split('?').shift().split('.').pop()}`;
     },
   },
 };
