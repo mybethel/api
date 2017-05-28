@@ -13,8 +13,8 @@ module.exports = {
     toJSON: {
       transform(doc, ret, options) {
         ret.size = ret.size || 0;
-        ret.type = mime.lookup(ret.url);
         ret.url = doc.downloadUrl;
+        ret.type = mime.lookup(ret.url);
         return ret;
       }
     }
