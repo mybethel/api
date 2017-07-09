@@ -5,9 +5,9 @@ module.exports = {
     name: String,
     image: String,
     ministry: { type: Mongoose.Schema.Types.ObjectId, ref: 'Ministry' },
-    updatedAt: Date
   },
   options: {
+    timestamps: true,
     toJSON: {
       transform(doc, ret, options) {
         ret.image = doc.imageUrl;

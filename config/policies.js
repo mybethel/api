@@ -3,4 +3,5 @@ module.exports = {
   '/performance/track': true,
   '/user/auth': true,
   '/user': 'publicCreate',
+  '/subscription': 'authenticated',
 };
