@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+const dot = require('dot-object');
+const fs = require('fs');
+const util = require('util');
+
+const heroku = require('./lib/heroku-config');
+const app = require('../app.json');
+
+// These are the basic defaults that are necessary for the application to run
+// locally. They can be overwritten with proper understanding but this provides
+// users with the quickest path to getting started with no existing `local.js`.
+let defaultConfig = {
+  connections: {
+    mongo: {
+      url: 'mongodb://127.0.0.1:32768/mybethel',
+    },
+  },
+  log: {
+    level: 'verbose',
+  },
+};
+
+// If a `local.js` file already exists, we attempt to merge it with the defaults
+// so that none of your custom settings are overwritten by this script.
+try {
+  let localConfig = require('../config/env/local.js');
+  config = Object.assign(defaultConfig, localConfig);
+} catch (e) {}
+
+heroku('bethel-api').then(config => {
+  // Each required setting is defined in `app.json` to allow for Heroku to
+  // create review applications for pull requests. We have extended this by
+  // adding an additional parameter `local` in each environment setting. This
+  // determines where the remote setting will be placed in the `local.js` file
+  // using dot syntax. Anything with a `local` parameter will overwrite any
+  // settings that have been defined in an existing `local.js` file.
+  for (let env in app.env) {
+    if (!app.env[env].local) continue;
+    dot.str(app.env[env].local, config[env], defaultConfig);
+  }
+
+  // Once everything is combined, the resulting `local.js` is written.
+  let localConfig = require('path').resolve(__dirname, '../config/env/local.js');
+  fs.writeFileSync(localConfig, `module.exports = ${util.inspect(defaultConfig)};`);
+}).catch(() => process.exit(-1));
