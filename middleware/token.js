@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = app => (req, res, next) => {
-  let token = req.body.token || req.query.token || req.headers.authorization;
+  let token = req.body.authorization || req.query.authorization || req.headers.authorization;
   if (!token) return next();
 
   // Support for the authorization scheme in RFC2617. Currently only JWT is
