@@ -1,12 +1,16 @@
 module.exports = (router, app) => ({
 
   async create(req, res) {
-    if (!req.body.id) return res.badRequest('id required');
+    if (!req.body.id || !req.body.token) return res.badRequest('id required');
 
     let existing = await app.model('subscription').findOne({ ministry: req.body.id });
     if (existing) return res.badRequest('subscription already exists');
 
-    let customer = await app.stripe.customers.create({ metadata: { ministry: req.body.id } });
+    let customer = await app.stripe.customers.create({
+      metadata: { ministry: req.body.id },
+      source: req.body.token,
+    });
+
     app.model('subscription').create({
       customerId: customer.id,
       ministry: req.body.id,
