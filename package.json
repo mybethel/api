@@ -9,7 +9,7 @@
     "test": "NODE_ENV=test istanbul cover -x '**/*.(test|fixture).js' _mocha -- -b './api/**/*.test.js'"
   },
   "dependencies": {
-    "@nautilus/web": "^0.6.9",
+    "@nautilus/web": "^0.7.1",
     "bcrypt": "^1.0.2",
     "jsonwebtoken": "^7.3.0",
     "keen-js": "^3.4.1",
