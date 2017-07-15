@@ -31,6 +31,23 @@ module.exports = (router, app) => ({
 
     let customer = await app.stripe.customers.retrieve(metadata.customerId);
     res.ok(customer);
+  },
+
+  async update(req, res) {
+    let metadata = await app.model('subscription').findOne({
+      $or: [
+        { _id: req.params.id },
+        { customerId: req.params.id },
+        { ministry: req.params.id },
+      ],
+    });
+    if (!metadata) return res.notFound();
+
+    req.body = req.body || {};
+    req.body.customer = metadata.customerId
+
+    let subscription = app.stripe.subscriptions.create(req.body);
+    res.ok(subscription);
   }
 
 });
