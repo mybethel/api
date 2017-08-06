@@ -64,7 +64,7 @@ describe('api:media', function() {
       .set('Authorization', `JWT ${token}`)
       .send(fixture.mediaNoType)
       .expect(201, (err, response) => {
-        expect(response.body.data.type).toEqual('audio/mpeg');
+        expect(response.body.data.mime).toEqual('audio/mpeg');
         done(err);
       });
   });

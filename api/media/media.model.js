@@ -7,10 +7,14 @@ module.exports = {
     description: String,
     filename: String,
     ministry: { type: Mongoose.Schema.Types.ObjectId, ref: 'Ministry' },
+    mime: String,
     name: String,
     podcast: { type: Mongoose.Schema.Types.ObjectId, ref: 'Podcast' },
     size: Number,
-    type: String,
+    type: {
+      type: String,
+      enum: ['cloud', 'vimeo'],
+    },
     uploading: Boolean,
     url: String
   },
@@ -20,7 +24,7 @@ module.exports = {
       transform(doc, ret, options) {
         ret.size = ret.size || 0;
         ret.url = doc.downloadUrl;
-        ret.type = ret.type || mime.lookup(ret.url);
+        ret.mime = ret.mime || mime.lookup(ret.url);
         return ret;
       }
     }

@@ -11,21 +11,21 @@ module.exports = (router, app) => ({
    * @param {Object} req.body - Metadata for the media being uploaded.
    * @param {String} req.body.filename - The original filename.
    * @param {String} req.body.ministry - The ministry ID to associate the media.
-   * @param {String} req.body.type - The mimetype of the file being uploaded.
+   * @param {String} req.body.mime - The mime-type of the file being uploaded.
    * This *must* match the file being uploaded otherwise S3 will reject. If a
-   * mimetype is not available, the original filename is used.
+   * mime-type is not available, the original filename is used.
    */
   create(req, res) {
     if (!req.body.ministry) return res.badRequest('ministry required');
 
-    if (!req.body.type && req.body.filename) {
-      req.body.type = mime.lookup(req.body.filename);
+    if (!req.body.mime && req.body.filename) {
+      req.body.mime = mime.lookup(req.body.filename);
     }
 
     app.model('media').findOrCreate(req.body, (err, media, created) => {
       if (err) return res.serverError(err);
 
-      media.filename = `${media._id}.${mime.extension(media.type)}`;
+      media.filename = `${media._id}.${mime.extension(media.mime)}`;
 
       let key = ['media', req.body.ministry];
       if (req.body.podcast) {
@@ -37,7 +37,7 @@ module.exports = (router, app) => ({
         Bucket: app.config.aws.bucket,
         Key: key.join('/'),
         Expires: 3600,
-        ContentType: req.body.type,
+        ContentType: req.body.mime,
       };
 
       app.aws.s3.getSignedUrl('putObject', params, (err, url) => {
