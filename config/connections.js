@@ -1,4 +1,4 @@
-var config = {
+let config = {
   mongo: {
     url: process.env.DB_MONGO || 'mongodb://localhost:32768/mybethel'
   }
@@ -6,10 +6,8 @@ var config = {
 
 if (typeof process.env.DB_MONGO !== 'undefined') {
   config.mongo.options = {
-    mongos: {
-      ssl: Boolean(process.env.DB_MONGO),
-      sslValidate: false
-    }
+    ssl: Boolean(process.env.DB_MONGO),
+    sslValidate: false,
   };
 }
 
