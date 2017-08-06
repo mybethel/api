@@ -12,7 +12,7 @@ module.exports = (router, app) => ({
 
     let addons = [];
 
-    if (req.body.ip_address) {
+    if (typeof req.body.ip_address !== 'undefined') {
       // If the IP address specified is in IPv6 "compatiblity" mode convert to
       // the standard IPv4 version so Keen can correctly parse the address.
       req.body.ip_address = req.body.ip_address.replace('::ffff:', '');
@@ -23,7 +23,7 @@ module.exports = (router, app) => ({
       });
     }
 
-    if (req.body.user_agent) {
+    if (typeof req.body.user_agent !== 'undefined') {
       addons.push({
         name: 'keen:ua_parser',
         input: { ua_string: 'user_agent' },
