@@ -89,6 +89,7 @@ function processResults(results, tags) {
 
   return new Promise(resolve => {
     results.forEach(response => {
+      if (!response.data) return;
       matchingVideos = matchingVideos.concat(response.data.filter(video => {
         // If a video is not marked as public it is ignored. In the future this
         // could be modified to allow private channels to be used as a source.
