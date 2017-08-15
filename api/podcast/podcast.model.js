@@ -6,7 +6,7 @@ module.exports = app => ({
     // For podcasts which sync with Vimeo, the sync is run every 6 hours when
     // the podcast is requested. This preserves resources for active podcasts.
     postFindOne(doc) {
-      if (doc.source !== 2) return;
+      if (!doc || doc.source !== 2) return;
       if (differenceInHours(Date.now(), doc.lastSync) < 6) return;
       app.vimeoSync.run(doc);
     },
