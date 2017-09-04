@@ -27,7 +27,7 @@ module.exports = (router, app) => ({
         { ministry: req.params.id },
       ],
     });
-    if (!metadata) return res.notFound();
+    if (!metadata) return res.ok({});
 
     let customer = await app.stripe.customers.retrieve(metadata.customerId);
     res.ok(customer);
