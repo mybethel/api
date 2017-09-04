@@ -5,6 +5,13 @@ module.exports = (router, app) => ({
 
     query.then(results => app.blueprint.format(results, query, req))
       .then(formatted => res.json(formatted));
+  },
+
+  '/:id/integration'(req, res) {
+    let query = app.blueprint.find('integration', { ministry: req.params.id }, req);
+
+    query.then(results => app.blueprint.format(results, query, req))
+      .then(formatted => res.json(formatted));
   }
 
 });
