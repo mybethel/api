@@ -3,6 +3,7 @@ module.exports = (router, app) => ({
   async vimeo(req, res) {
     // If this is not a response from Vimeo, redirect the user to request permission.
     if (req.params.id !== 'authorized') {
+      if (!req.authorization || !req.authorization.ministry) return res.unauthorized();
       return res.ok({
         url: app.vimeo.authorizationEndpoint(req.authorization.ministry),
       });
