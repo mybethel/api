@@ -2,6 +2,7 @@ const Mongoose = require('mongoose');
 
 module.exports = {
   schema: {
+    accountType: String,
     accessToken: String,
     expires: String,
     link: String,
