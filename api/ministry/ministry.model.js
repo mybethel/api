@@ -7,6 +7,7 @@ module.exports = {
       type: String,
     },
     name: String,
+    phone: String,
     url: String,
   },
   options: {

@@ -34,6 +34,7 @@ module.exports = {
       type: String,
       enum: ['staff', 'admin', 'user', 'restricted'],
     },
+    title: String,
   },
   options: {
     toJSON: {
