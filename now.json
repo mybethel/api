@@ -7,6 +7,8 @@
     "KEEN_PROJECT": "@keen-project",
     "KEEN_READ": "@keen-read",
     "KEEN_WRITE": "@keen-write",
-    "STRIPE": "@stripe"
+    "STRIPE": "@stripe",
+    "VIMEO_CLIENT": "@vimeo-client",
+    "VIMEO_SECRET": "@vimeo-secret"
   }
 }
