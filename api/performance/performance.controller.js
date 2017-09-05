@@ -14,12 +14,14 @@ module.exports = (router, app) => ({
 
     // If the IP address specified is in IPv6 "compatiblity" mode convert to
     // the standard IPv4 version so Keen can correctly parse the address.
-    req.body.ip_address = (req.body.ip_address || req.ip).replace('::ffff:', '');
-    addons.push({
-      name: 'keen:ip_to_geo',
-      input: { ip: 'ip_address' },
-      output: 'ip_geo_info',
-    });
+    if (req.body.ip_address || req.ip) {
+      req.body.ip_address = (req.body.ip_address || req.ip).replace('::ffff:', '');
+      addons.push({
+        name: 'keen:ip_to_geo',
+        input: { ip: 'ip_address' },
+        output: 'ip_geo_info',
+      });
+    }
 
     if (req.body.user_agent) {
       addons.push({
