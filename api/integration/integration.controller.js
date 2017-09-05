@@ -23,7 +23,7 @@ module.exports = (router, app) => ({
       link: token.user.link,
       ministry: req.query.state,
       name: token.user.name,
-      picture: token.user.pictures[0],
+      picture: token.user.pictures[0] && token.user.pictures[0].link,
       provider: 'vimeo',
       user: token.user.uri,
     }).then(result => {
