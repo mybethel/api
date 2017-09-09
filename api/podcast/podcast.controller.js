@@ -4,7 +4,8 @@ module.exports = (router, app) => ({
     let query = app.blueprint.find('media', { podcast: req.params.id }, req);
 
     query.then(results => app.blueprint.format(results, query, req))
-      .then(formatted => res.json(formatted));
+      .then(formatted => res.ok(formatted))
+      .catch(err => res.serverError(err));
   },
 
   '/:id/performance': function(req, res) {
