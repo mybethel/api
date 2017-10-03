@@ -20,6 +20,7 @@ module.exports = {
   },
   options: {
     collection: 'podcastmedia',
+    timestamps: true,
     toJSON: {
       transform(doc, ret, options) {
         ret.size = ret.size || 0;
