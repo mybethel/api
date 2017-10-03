@@ -5,7 +5,10 @@ module.exports = (router, app) => ({
 
     query.then(results => app.blueprint.format(results, query, req))
       .then(formatted => res.ok(formatted))
-      .catch(err => res.serverError(err));
+      .catch(err => {
+        app.log.error(err);
+        res.serverError(err);
+      });
   },
 
   '/:id/performance': function(req, res) {
