@@ -7,7 +7,7 @@ module.exports = app => ({
     // the podcast is requested. This preserves resources for active podcasts.
     postFindOne(doc) {
       if (!doc || doc.source !== 2) return;
-      if (differenceInHours(Date.now(), doc.lastSync) < 6) return;
+      if (doc.lastSync && differenceInHours(Date.now(), doc.lastSync) < 6) return;
       app.vimeoSync.run(doc);
     },
   },

@@ -4,19 +4,27 @@ const Mongoose = require('mongoose');
 module.exports = {
   schema: {
     date: Date,
+    deleted: Boolean,
     description: String,
+    duration: Number,
     filename: String,
     ministry: { type: Mongoose.Schema.Types.ObjectId, ref: 'Ministry' },
     mime: String,
     name: String,
     podcast: { type: Mongoose.Schema.Types.ObjectId, ref: 'Podcast' },
+    reference: String,
+    referenceId: Number,
     size: Number,
+    tags: [String],
+    thumbnail: String,
     type: {
       type: String,
       enum: ['cloud', 'vimeo'],
     },
     uploading: Boolean,
-    url: String
+    url: String,
+    uuid: String,
+    variants: Mongoose.Schema.Types.Mixed,
   },
   options: {
     collection: 'podcastmedia',

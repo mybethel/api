@@ -11,7 +11,8 @@ module.exports = app => ({
         return Promise.all(results.map(result => {
           result.podcast = podcast._id;
           app.model('media').update({ uuid: result.uuid, podcast: podcast._id }, result)
-            .catch(err => {
+            .then(dbResult => {
+              if (dbResult.n > 0) return;
               app.log.verbose(`vimeoSync: new media ${result.uuid} on podcast ${podcast._id}`);
               app.model('media').create(result);
             });
@@ -56,8 +57,6 @@ function getVideos(token, page) {
  * @param {Array} tags All tags which should be used to match.
  */
 function checkPages(token, tags) {
-  const tagsToSync = tags.toString().toLowerCase();
-
   return function firstPageCallback(response) {
     let additionalPages = 0;
     if (response.total > 50) {
@@ -126,7 +125,7 @@ function processResults(results, tags) {
         description: video.description,
         duration: video.duration,
         name: video.name,
-        tags: video.tags.map(tag => tag.name),
+        tags: video.tags.map(tag => tag.name.toLowerCase()),
         thumbnail: video.pictures && video.pictures[0].link,
         url: variants.sd,
         uuid: video.uri.replace('/videos/', ''),
