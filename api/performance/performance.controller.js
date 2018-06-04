@@ -36,7 +36,7 @@ module.exports = (router, app) => ({
     // Analytics are sent behind the scenes and a `200` response is always sent.
     // This is done to keep the API responsive and prevent upstream issues from
     // affecting the usability of end-user applications.
-    app.performance.client.addEvent(collection, req.body, err => {
+    app.performance.client.recordEvent(collection, req.body, err => {
       if (err) app.log.error(err);
     });
 

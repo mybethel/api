@@ -1,4 +1,4 @@
-const Keen = require('keen-js');
+const Keen = require('keen-tracking');
 const qs = require('qs');
 
 module.exports = app => {
