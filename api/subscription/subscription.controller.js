@@ -20,13 +20,13 @@ module.exports = (router, app) => ({
   async findOne(req, res) {
     if (!req.params.id) return res.badRequest('id required');
 
-    let metadata = await app.model('subscription').findOne({
-      $or: [
-        { _id: req.params.id },
-        { customerId: req.params.id },
-        { ministry: req.params.id },
-      ],
-    });
+    let params = [{ customerId: req.params.id }];
+    if (ObjectId.isValid(req.params.id)) {
+      params.push({ _id: req.params.id });
+      params.push({ ministry: req.params.id });
+    }
+
+    let metadata = await app.model('subscription').findOne({ $or: params });
     if (!metadata) return res.ok({});
 
     let customer = await app.stripe.customers.retrieve(metadata.customerId);
