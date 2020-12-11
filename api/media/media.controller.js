@@ -1,4 +1,4 @@
-const mime = require('mime-types');
+const mime = require('mime');
 
 module.exports = (router, app) => ({
 
