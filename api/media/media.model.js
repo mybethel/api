@@ -33,7 +33,7 @@ module.exports = {
       transform(doc, ret, options) {
         ret.size = ret.size || 0;
         ret.url = doc.downloadUrl;
-        ret.mime = ret.mime || ret.url && mime.lookup(ret.url);
+        ret.mime = ret.mime || ret.url && mime.getType(ret.url);
         return ret;
       }
     }

@@ -19,11 +19,11 @@ module.exports = (router, app) => ({
     if (!req.body.ministry) return res.badRequest('ministry required');
 
     if (!req.body.mime && req.body.filename) {
-      req.body.mime = mime.lookup(req.body.filename);
+      req.body.mime = mime.getType(req.body.filename);
     }
 
     app.model('media').findOrCreate(req.body).then(media => {
-      media.filename = `${media._id}.${mime.extension(media.mime)}`;
+      media.filename = `${media._id}.${mime.getExtension(media.mime)}`;
 
       let key = ['media', req.body.ministry];
       if (req.body.podcast) {
