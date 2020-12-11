@@ -22,9 +22,7 @@ module.exports = (router, app) => ({
       req.body.mime = mime.lookup(req.body.filename);
     }
 
-    app.model('media').findOrCreate(req.body, (err, media, created) => {
-      if (err) return res.serverError(err);
-
+    app.model('media').findOrCreate(req.body).then(media => {
       media.filename = `${media._id}.${mime.extension(media.mime)}`;
 
       let key = ['media', req.body.ministry];
@@ -43,9 +41,9 @@ module.exports = (router, app) => ({
       app.aws.s3.getSignedUrl('putObject', params, (err, url) => {
         if (err) return res.serverError(err);
 
-        return res[created && 'created' || 'ok']({ data: media, uploadUrl: url });
+        return res[media.$__.inserting && 'created' || 'ok']({ data: media, uploadUrl: url });
       });
-    });
+    }).catch(err => res.serverError(err));
   },
 
   /**
