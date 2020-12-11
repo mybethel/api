@@ -12,6 +12,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - run: sudo docker run --name mongo -d -p 27017:27017 mongo:latest
     - uses: actions/cache@v2
       with:
         path: ~/.npm
@@ -20,22 +21,3 @@ jobs:
           ${{ runner.os }}-node-
     - run: npm ci
     - run: npm test
-
-  lint:
-    if: github.event_name != 'pull_request'
-    name: ESLint
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - run: npm ci
-    - run: npx eslint .
