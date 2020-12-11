@@ -35,7 +35,7 @@ describe('api:user', function() {
   });
 
   it('encodes the user password', done => {
-    expect(createdUser.password).toNotEqual(fixture.user.password);
+    expect(createdUser.password).not.toEqual(fixture.user.password);
     bcrypt.compare(fixture.user.password, createdUser.password, (err, valid) => {
       expect(valid).toEqual(true);
       done(err);
