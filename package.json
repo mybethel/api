@@ -15,7 +15,6 @@
     "bcrypt": "^5.0.0",
     "date-fns": "^1.29.0",
     "jsonwebtoken": "^8.2.2",
-    "keen-tracking": "^2.0.1",
     "mime": "^2.4.6",
     "node-fetch": "^2.6.1",
     "stripe": "^6.1.0"

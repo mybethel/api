@@ -4,9 +4,6 @@
   "env": {
     "DB_MONGO": "@db-mongo-prod",
     "JWT_SECRET": "@jwt",
-    "KEEN_PROJECT": "@keen-project",
-    "KEEN_READ": "@keen-read",
-    "KEEN_WRITE": "@keen-write",
     "STRIPE": "@stripe",
     "VIMEO_CLIENT": "@vimeo-client",
     "VIMEO_SECRET": "@vimeo-secret"
