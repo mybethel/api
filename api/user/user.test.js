@@ -19,7 +19,7 @@ describe('api:user', function() {
 
   it('prohibits multiple users with the same e-mail', done => {
     app.model('user').create(fixture.user, err => {
-      expect(err).toExist();
+      expect(err).toBeTruthy();
       done();
     });
   });
@@ -35,7 +35,7 @@ describe('api:user', function() {
   });
 
   it('encodes the user password', done => {
-    expect(createdUser.password).toNotEqual(fixture.user.password);
+    expect(createdUser.password).not.toEqual(fixture.user.password);
     bcrypt.compare(fixture.user.password, createdUser.password, (err, valid) => {
       expect(valid).toEqual(true);
       done(err);
@@ -67,7 +67,7 @@ describe('api:user', function() {
         .send({ email: fixture.user.email, password: fixture.user.password })
         .expect(200, (err, response) => {
           expect(response.body.data.email).toEqual(fixture.user.email);
-          expect(response.body.token).toExist();
+          expect(response.body.token).toBeTruthy();
           authToken = response.body.token;
           done();
         });
@@ -99,7 +99,7 @@ describe('api:user', function() {
 
     it('creates a matching ministry for the registering user', done => {
       app.model('user').findOne({ email: fixture.newUser.email }, (err, user) => {
-        expect(user.ministry).toExist();
+        expect(user.ministry).toBeTruthy();
         registeredUser = user;
         done();
       });
@@ -122,7 +122,7 @@ describe('api:user', function() {
         .set('Accept', 'application/json')
         .set('Authorization', `JWT ${authToken}`)
         .expect(200, (err, response) => {
-          expect(response.body.token).toExist();
+          expect(response.body.token).toBeTruthy();
           authToken = response.body.token;
           done();
         });
