@@ -1,4 +1,4 @@
-const differenceInHours = require('date-fns/difference_in_hours');
+const differenceInHours = require('date-fns/differenceInHours');
 const Mongoose = require('mongoose');
 
 module.exports = app => ({
