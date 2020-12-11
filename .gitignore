@@ -9,3 +9,5 @@ node_modules
 .DS_Store
 *.archive
 .nyc_output/
+
+.vercel

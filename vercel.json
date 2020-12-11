@@ -1,0 +1,29 @@
+{
+  "scope": "bethel",
+  "env": {
+    "DB_MONGO": "@db-mongo",
+    "JWT_SECRET": "@jwt",
+    "STRIPE": "@stripe",
+    "VIMEO_CLIENT": "@vimeo-client",
+    "VIMEO_SECRET": "@vimeo-secret"
+  },
+  "builds": [{
+    "src": "index.js",
+    "use": "@now/node",
+    "config": {
+      "includeFiles": [
+        "api/**",
+        "config/**",
+        "hooks/**",
+        "middleware/**",
+        "node_modules/@nautilus/**"
+      ]
+    }
+  }],
+  "github": {
+    "silent": true
+  },
+  "routes": [
+    { "src": "/.*", "dest": "/" }
+  ]
+}
