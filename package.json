@@ -20,7 +20,7 @@
     "stripe": "^6.1.0"
   },
   "devDependencies": {
-    "dot-object": "^1.7.0",
+    "dot-object": "^2.1.4",
     "expect": "^26.6.2",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
